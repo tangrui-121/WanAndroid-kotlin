@@ -1,0 +1,10 @@
+*.iml
+.gradle/
+.idea/
+build/
+captures/
+/local.properties
+fastlane/report.xml
+Gemfile.lock
+*/.DS_Store
+.DS_Store
