@@ -9,9 +9,8 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityLoginBinding
 import com.example.wanandroid_k_m_j.ui.main.MainActivity
 import com.example.wanandroid_k_m_j.utils.ToastAction.toast
-import com.huastart.vpn.utils.fullScreen
-import com.huastart.vpn.utils.log
-import com.huastart.vpn.utils.singleClick
+import com.example.wanandroid_k_m_j.utils.log
+import com.example.wanandroid_k_m_j.utils.singleClick
 import com.wanandroid.base.BaseVmActivity
 import com.wanandroid.base.ext.vmObserver
 

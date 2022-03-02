@@ -3,6 +3,9 @@ package com.example.wanandroid_k_m_j
 import android.app.Application
 import com.example.wanandroid_k_m_j.utils.ToastStyle
 import com.hjq.toast.ToastUtils
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+
 
 /**
  * @author TangRui
@@ -24,8 +27,8 @@ class WanAndroidApp: Application() {
             ToastUtils.init(application, ToastStyle())
             // 设置调试模式
             ToastUtils.setDebugMode(BuildConfig.DEBUG)
-            // 设置 Toast 拦截器
-//            ToastUtils.setInterceptor(ToastLogInterceptor())
+
+            Logger.addLogAdapter(AndroidLogAdapter())
         }
 
     }

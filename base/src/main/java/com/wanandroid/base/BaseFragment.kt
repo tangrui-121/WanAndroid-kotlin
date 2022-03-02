@@ -1,11 +1,15 @@
 package com.wanandroid.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.base1.R
 
 /**
  * @author TangRui
@@ -32,5 +36,22 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun initView(view: View, savedInstanceState: Bundle?) {
 
+    }
+
+    private var mDialog: Dialog? = null
+    fun showProgress() {
+        mDialog ?: let {
+            mDialog = Dialog(requireContext())
+            mDialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            val progressBar = ProgressBar(requireContext())
+            progressBar.indeterminateDrawable =
+                ContextCompat.getDrawable(requireContext(), R.drawable.progressbar)
+            mDialog?.setContentView(progressBar)
+        }
+        mDialog?.show()
+    }
+
+    fun dismissProgress() {
+        mDialog?.dismiss()
     }
 }

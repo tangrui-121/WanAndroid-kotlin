@@ -19,4 +19,8 @@ object Urls {
      * 文章列表
      */
     const val ARTICLE = "article/list/{page}/json"
+    /**
+     * 置顶文章列表
+     */
+    const val TOP_ARTICLE = "article/top/json"
 }

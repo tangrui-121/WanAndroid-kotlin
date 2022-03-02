@@ -1,8 +1,7 @@
 package com.example.wanandroid_k_m_j.network
 
+import com.example.wanandroid_k_m_j.utils.httpLog
 import com.google.gson.GsonBuilder
-import com.huastart.vpn.utils.log
-import com.orhanobut.logger.Logger
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * @author TangRui
- * @description:
+ * @description: Retrofit单例
  * @date:2022/2/23 17:31
  */
 object NetworkApi {
@@ -36,8 +35,7 @@ object NetworkApi {
     private fun getInterceptor(): Interceptor {
         val rLog = object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                message.log()
-                Logger.i(message)
+                message.httpLog()
             }
         }
         return HttpLoggingInterceptor(rLog).apply {

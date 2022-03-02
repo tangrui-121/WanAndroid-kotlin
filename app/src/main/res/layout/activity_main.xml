@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.wanandroid_k_m_j.weight.NoScrollViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_home_pager"
         android:layout_width="match_parent"
         android:layout_height="0px"
@@ -22,5 +22,5 @@
         app:spanCount="4"
         tools:itemCount="4"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/home_navigation_item" />
+        tools:listitem="@layout/item_main_navigation" />
 </LinearLayout>

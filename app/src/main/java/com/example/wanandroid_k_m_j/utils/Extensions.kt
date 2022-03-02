@@ -1,4 +1,4 @@
-package com.huastart.vpn.utils
+package com.example.wanandroid_k_m_j.utils
 
 import android.app.Activity
 import android.graphics.Color
@@ -21,6 +21,13 @@ internal fun Any?.log() {
         Log.i(HUB_LOG_TAG, toString())
     }
 }
+
+internal fun Any?.httpLog() {
+    if (BuildConfig.DEBUG) {
+        Log.i("http_log", toString())
+    }
+}
+
 
 /**
  * 项目统一toast

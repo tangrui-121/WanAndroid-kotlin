@@ -7,7 +7,7 @@ import android.os.Bundle
  * @description: ViewModelFragment基类，ViewModelFragment继承
  * @date:2022/2/22 18:07
  */
-abstract class BaseVmFragment :BaseFragment(){
+abstract class BaseVmFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

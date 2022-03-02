@@ -1,4 +1,4 @@
-package com.huastart.vpn.utils
+package com.example.wanandroid_k_m_j.utils
 
 import android.view.View
 
