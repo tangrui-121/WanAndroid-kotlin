@@ -48,6 +48,7 @@ data class ArticleDataEntity(
     var link: String = "",
     var collect: Boolean = false,
     var fresh: Boolean = false,
+    var top: Boolean = false,
     var tags: ArrayList<ArticleTagEntity> = ArrayList()
 ) : Parcelable {
     override fun toString(): String {

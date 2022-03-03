@@ -2,8 +2,10 @@ package com.example.wanandroid_k_m_j.network
 
 import com.example.wanandroid_k_m_j.data.AppBaseEntity
 import com.example.wanandroid_k_m_j.ui.login.UserEntity
+import com.example.wanandroid_k_m_j.ui.main.home.ArticleDataEntity
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleEntity
 import retrofit2.http.*
+import java.util.ArrayList
 
 /**
  * @author TangRui
@@ -16,8 +18,8 @@ interface NetApiService {
     suspend fun login(@Field("username") username: String, @Field("password") password: String): AppBaseEntity<UserEntity>
 
     @GET(Urls.ARTICLE)
-    suspend fun getArticle(@Path("page") page: Long): AppBaseEntity<ArticleEntity>
+    suspend fun getArticle(@Path("page") page: Int): AppBaseEntity<ArticleEntity>
 
     @GET(Urls.TOP_ARTICLE)
-    suspend fun getTopArticle(): AppBaseEntity<ArticleEntity>
+    suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>>
 }

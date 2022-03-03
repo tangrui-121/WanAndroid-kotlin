@@ -2,6 +2,7 @@ package com.example.wanandroid_k_m_j.ui.main.home
 
 import com.example.wanandroid_k_m_j.data.AppBaseEntity
 import com.example.wanandroid_k_m_j.network.NetworkApi
+import java.util.ArrayList
 
 /**
  * @author TangRui
@@ -11,11 +12,11 @@ import com.example.wanandroid_k_m_j.network.NetworkApi
  */
 class HomeRepository {
 
-    suspend fun getArticle(page: Long): AppBaseEntity<ArticleEntity> {
+    suspend fun getArticle(page: Int): AppBaseEntity<ArticleEntity> {
         return NetworkApi.getApi().getArticle(page)
     }
 
-    suspend fun getTopArticle(): AppBaseEntity<ArticleEntity> {
+    suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>> {
         return NetworkApi.getApi().getTopArticle()
     }
 }

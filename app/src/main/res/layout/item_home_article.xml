@@ -49,20 +49,11 @@
                 android:textSize="@dimen/sp_11"
                 android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/item_article_tab"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_article_tabs"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:background="@drawable/bg_stroke_black_4f"
-                android:paddingStart="@dimen/dp_5"
-                android:paddingTop="@dimen/dp_2"
-                android:paddingEnd="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_2"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_11"
-                android:visibility="gone"
-                tools:text="自定义" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/item_article_name"
@@ -113,7 +104,7 @@
                 android:layout_width="@dimen/dp_18"
                 android:layout_height="@dimen/dp_18"
                 android:layout_alignParentEnd="true"
-                tools:srcCompat="@drawable/home_item_article" />
+                android:src="@drawable/home_item_article" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -7,7 +7,9 @@ import com.wanandroid.base.BaseViewModel
 import com.wanandroid.base.exception.AppException
 import com.wanandroid.common.BaseEntity
 import com.wanandroid.common.ContextHolder
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.net.ConnectException
 import java.net.UnknownHostException
 
@@ -61,6 +63,20 @@ fun <T> BaseViewModel.launchVmRequest(request: suspend () -> BaseEntity<T>, view
         }
     }
 }
+
+//fun <T> BaseViewModel.launchVmRequest(requests: suspend () -> BaseEntity<T>, viewState: VmLiveData<T>) {
+//    viewModelScope.launch {
+//        runCatching {
+//            viewState.value = VmState.Loading
+//            request()
+//        }.onSuccess {
+//            viewState.paresVmResult(it)
+//        }.onFailure {
+//            viewState.paresVmException(it)
+//        }
+//    }
+//}
+
 
 /**
  * net request
