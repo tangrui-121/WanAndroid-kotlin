@@ -8,7 +8,7 @@ import com.wanandroid.common.BaseEntity
  * @description:
  * @date:2022/2/23 16:55
  */
-class AppBaseEntity<T>(private var errorCode: Int, private var errorMsg: String, data: T) :
+class AppBaseEntity<T>(private var errorCode: Int, private var errorMsg: String, data: T?) :
     BaseEntity<T>(errorCode, errorMsg, data) {
 
     override fun dataRight(): Boolean {

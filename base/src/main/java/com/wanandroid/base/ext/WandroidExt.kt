@@ -7,9 +7,9 @@ import com.wanandroid.base.BaseViewModel
 import com.wanandroid.base.exception.AppException
 import com.wanandroid.common.BaseEntity
 import com.wanandroid.common.ContextHolder
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
 import java.net.ConnectException
 import java.net.UnknownHostException
 
@@ -30,7 +30,9 @@ fun Throwable?.parseErrorString(): String {
 
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserver(owner: LifecycleOwner, vmResult: VmResult<T>.() -> Unit) {
-    val result = VmResult<T>();result.vmResult();observe(owner = owner) {
+    val result = VmResult<T>()
+    result.vmResult()
+    observe(owner = owner) {
         when (it) {
             is VmState.Loading -> {
                 result.onAppLoading()
@@ -51,7 +53,10 @@ inline fun <T> VmLiveData<T>.vmObserver(owner: LifecycleOwner, vmResult: VmResul
  * @param request request method
  * @param viewState request result
  */
-fun <T> BaseViewModel.launchVmRequest(request: suspend () -> BaseEntity<T>, viewState: VmLiveData<T>) {
+fun <T> BaseViewModel.launchVmRequest(
+    request: suspend () -> BaseEntity<T>,
+    viewState: VmLiveData<T>
+) {
     viewModelScope.launch {
         runCatching {
             viewState.value = VmState.Loading
@@ -64,18 +69,34 @@ fun <T> BaseViewModel.launchVmRequest(request: suspend () -> BaseEntity<T>, view
     }
 }
 
-//fun <T> BaseViewModel.launchVmRequest(requests: suspend () -> BaseEntity<T>, viewState: VmLiveData<T>) {
-//    viewModelScope.launch {
-//        runCatching {
-//            viewState.value = VmState.Loading
-//            request()
-//        }.onSuccess {
+/**
+ * net requests
+ * @param request request method
+ * @param viewState request result
+ */
+fun <T> BaseViewModel.launchVmRequests(
+    requests: List<suspend () -> BaseEntity<T>>,
+    viewStates: List<VmLiveData<T>>
+) {
+    viewModelScope.launch {
+        runCatching {
+            for (v in viewStates) {
+                v.value = VmState.Loading
+            }
+            val asyncs = arrayListOf<Deferred<*>>()
+            for (request in requests) {
+                asyncs.add(async { request })
+            }
+            for (a in asyncs) {
+                a.await()
+            }
+        }.onSuccess {
 //            viewState.paresVmResult(it)
-//        }.onFailure {
+        }.onFailure {
 //            viewState.paresVmException(it)
-//        }
-//    }
-//}
+        }
+    }
+}
 
 
 /**

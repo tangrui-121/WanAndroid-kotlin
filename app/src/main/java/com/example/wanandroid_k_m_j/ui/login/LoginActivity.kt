@@ -1,18 +1,19 @@
 package com.example.wanandroid_k_m_j.ui.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityLoginBinding
-import com.example.wanandroid_k_m_j.ui.main.MainActivity
+import com.example.wanandroid_k_m_j.helper.MvvmHelper.MVVM_KEY_ACCOUNT
+import com.example.wanandroid_k_m_j.helper.MvvmHelper.getMvvmNormal
 import com.example.wanandroid_k_m_j.utils.ToastAction.toast
 import com.example.wanandroid_k_m_j.utils.log
 import com.example.wanandroid_k_m_j.utils.singleClick
 import com.wanandroid.base.BaseVmActivity
 import com.wanandroid.base.ext.vmObserver
+import com.wanandroid.base.utils.immersive
 
 class LoginActivity : BaseVmActivity() {
 
@@ -25,6 +26,7 @@ class LoginActivity : BaseVmActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mToolbar.visibility = View.GONE
+        immersive(darkMode = true)
         initClickEvents()
     }
 
@@ -32,8 +34,10 @@ class LoginActivity : BaseVmActivity() {
         mViewModel.loginResult.vmObserver(this) {
             onAppLoading { showProgress() }
             onAppSuccess {
+                getMvvmNormal()
+                    .encode(MVVM_KEY_ACCOUNT, mViewBinding.edAccount.text.toString())
                 toast("登录成功")
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                finish()
             }
             onAppComplete { dismissProgress() }
             onAppError { it.errorMsg.log() }
@@ -47,5 +51,10 @@ class LoginActivity : BaseVmActivity() {
                 mViewBinding.edPwd.text.toString()
             )
         }
+    }
+
+    override fun finish() {
+        LoginHelper.performCallback()
+        super.finish()
     }
 }

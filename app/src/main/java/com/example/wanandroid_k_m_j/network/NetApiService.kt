@@ -15,11 +15,23 @@ import java.util.ArrayList
 interface NetApiService {
     @POST(Urls.LOGIN)
     @FormUrlEncoded
-    suspend fun login(@Field("username") username: String, @Field("password") password: String): AppBaseEntity<UserEntity>
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): AppBaseEntity<UserEntity>
 
     @GET(Urls.ARTICLE)
     suspend fun getArticle(@Path("page") page: Int): AppBaseEntity<ArticleEntity>
 
     @GET(Urls.TOP_ARTICLE)
     suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>>
+
+    @POST(Urls.Collect_Article)
+    @FormUrlEncoded
+    suspend fun <T> collectArticle(
+        @Path("id") id: Long,
+        @Field("title") title: String,
+        @Field("link") link: String,
+        @Field("author") author: String
+    ): AppBaseEntity<T>
 }

@@ -19,4 +19,13 @@ class HomeRepository {
     suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>> {
         return NetworkApi.getApi().getTopArticle()
     }
+
+    suspend fun <T> collectArticle(
+        id: Long,
+        title: String,
+        link: String,
+        author: String
+    ): AppBaseEntity<T> {
+        return NetworkApi.getApi().collectArticle(id, title, link, author)
+    }
 }

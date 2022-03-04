@@ -59,4 +59,5 @@ dependencies {
     api(WanAndroidExt.activityKtx)
     api(WanAndroidExt.ImmersionBar)
     api(WanAndroidExt.BasequickAdapter)
+    api(WanAndroidExt.cookie)
 }

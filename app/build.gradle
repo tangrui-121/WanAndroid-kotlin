@@ -55,6 +55,5 @@ dependencies {
     implementation(WanAndroidExt.toastUtils)
     implementation(WanAndroidExt.Smartrefresh)
     implementation(WanAndroidExt.SmartrefreshHead)
-
-
+    implementation 'com.tencent:mmkv-static:1.0.23'
 }

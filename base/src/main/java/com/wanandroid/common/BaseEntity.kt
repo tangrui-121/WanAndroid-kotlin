@@ -12,7 +12,7 @@ import androidx.annotation.Keep
 open class BaseEntity<T>(
     var code: Int = 1,
     var message: String = "",
-    var data: T
+    var data: T?
 ) {
     override fun toString(): String {
         return this.toJsonString()

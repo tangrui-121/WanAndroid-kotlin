@@ -2,6 +2,7 @@ package com.example.wanandroid_k_m_j.ui.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ import com.example.wanandroid_k_m_j.ui.main.home.HomeFragment
 import com.example.wanandroid_k_m_j.ui.main.mine.MineFragment
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.wanandroid.base.BaseActivity
+import com.wanandroid.base.utils.immersive
 
 class MainActivity : BaseActivity() {
 
@@ -48,6 +50,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
+        mToolbar.visibility = View.GONE
+        immersive(darkMode = true)
     }
 
     @SuppressLint("NotifyDataSetChanged")

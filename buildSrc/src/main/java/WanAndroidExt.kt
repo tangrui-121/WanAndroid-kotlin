@@ -76,4 +76,6 @@ object WanAndroidExt {
     // 下拉刷新
     const val Smartrefresh = "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0"
     const val SmartrefreshHead = "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0"
+    // cookie持久化
+    const val cookie = "com.github.franmontiel:PersistentCookieJar:v1.0.1"
 }

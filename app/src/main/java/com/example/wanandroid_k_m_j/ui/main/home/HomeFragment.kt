@@ -14,7 +14,9 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleTagsBinding
+import com.example.wanandroid_k_m_j.ui.login.LoginHelper
 import com.example.wanandroid_k_m_j.utils.log
+import com.example.wanandroid_k_m_j.utils.singleClick
 import com.example.wanandroid_k_m_j.utils.visibleOrGone
 import com.wanandroid.base.BaseVmFragment
 import com.wanandroid.base.adapter.BaseBindingAdapter
@@ -52,6 +54,7 @@ class HomeFragment : BaseVmFragment() {
     // 置顶文章，由于不想先刷置顶再刷其他，想一起刷新，就先搞个置顶变量再一起addlist
     private var topHomeArticle: ArrayList<ArticleDataEntity> = ArrayList()
     private var page = 0
+    private var collect_pos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +64,7 @@ class HomeFragment : BaseVmFragment() {
     }
 
     override fun addData() {
-        mViewModel.getArticle(page)
+        mViewBinding.refresh.autoRefresh()
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -109,16 +112,37 @@ class HomeFragment : BaseVmFragment() {
                 holder.vb.itemArticleTitle.text = Html.fromHtml(item.title)
                 holder.vb.itemArticleTips.text = "${item.superChapterName}/${item.chapterName}"
                 holder.vb.itemArticleLike.isSelected = item.collect
+
+                holder.vb.itemArticleLike.singleClick {
+                    LoginHelper.loginWith(requireContext()) {
+                        collect_pos = getItemPosition(item)
+                        mViewModel.collectArticle(
+                            id = item.id,
+                            title = item.title,
+                            link = item.link,
+                            author = item.author
+                        )
+                    }
+                }
             }
         }
         mViewBinding.rvHomearticle.adapter = articleAdapter
+
+
+        mViewBinding.refresh.setOnRefreshListener {
+            page = 0
+            mViewModel.getArticle(page)
+        }
+        mViewBinding.refresh.setOnLoadMoreListener {
+            page++
+            mViewModel.getArticle(page)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
         // 置顶文章
         mViewModel.topAarticleResult.vmObserver(this) {
-            onAppLoading { showProgress() }
             onAppSuccess {
                 if (it.size > 0) {
                     for (bean in it) {
@@ -127,20 +151,31 @@ class HomeFragment : BaseVmFragment() {
                     topHomeArticle = it
                 }
             }
-            onAppComplete { dismissProgress() }
             onAppError { it.errorMsg.log() }
         }
         // 其他文章
         mViewModel.articleResult.vmObserver(this) {
-            onAppLoading { showProgress() }
             onAppSuccess {
                 if (page == 0) homeArticle.articleList.addAll(topHomeArticle)
                 it.articleList.let { articles ->
                     homeArticle.articleList.addAll(articles)
                     articleAdapter.notifyDataSetChanged()
                 }
+                if (page == 0) {
+                    mViewBinding.refresh.finishRefresh()
+                } else {
+                    mViewBinding.refresh.finishLoadMore()
+                }
             }
-            onAppComplete { dismissProgress() }
+            onAppError { it.errorMsg.log() }
+        }
+
+        // 收藏文章
+        mViewModel.collectArticleResult.vmObserver(this) {
+            onAppSuccess {
+                homeArticle.articleList.get(collect_pos).collect = true
+                articleAdapter.notifyItemChanged(collect_pos)
+            }
             onAppError { it.errorMsg.log() }
         }
     }

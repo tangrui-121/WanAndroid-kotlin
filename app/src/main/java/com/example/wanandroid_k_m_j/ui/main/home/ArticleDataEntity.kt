@@ -39,6 +39,7 @@ data class ArticleEntity(
 @Keep
 @Parcelize
 data class ArticleDataEntity(
+    var id: Long = 0,
     var author: String = "",
     var shareUser: String = "",
     var niceDate: String = "",

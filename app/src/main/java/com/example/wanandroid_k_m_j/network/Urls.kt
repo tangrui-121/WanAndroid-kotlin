@@ -23,4 +23,9 @@ object Urls {
      * 置顶文章列表
      */
     const val TOP_ARTICLE = "article/top/json"
+
+    /**
+     * 收藏文章
+     */
+    const val Collect_Article = "lg/collect/user_article/update/{id}/json"
 }
