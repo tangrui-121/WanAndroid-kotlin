@@ -116,12 +116,18 @@ class HomeFragment : BaseVmFragment() {
                 holder.vb.itemArticleLike.singleClick {
                     LoginHelper.loginWith(requireContext()) {
                         collect_pos = getItemPosition(item)
-                        mViewModel.collectArticle(
-                            id = item.id,
-                            title = item.title,
-                            link = item.link,
-                            author = item.author
-                        )
+                        if (item.collect) {
+                            mViewModel.unCollectArticle(
+                                id = item.id
+                            )
+                        } else {
+                            mViewModel.collectArticle(
+                                id = item.id,
+                                title = item.title,
+                                link = item.link,
+                                author = item.author
+                            )
+                        }
                     }
                 }
             }
@@ -144,11 +150,13 @@ class HomeFragment : BaseVmFragment() {
         // 置顶文章
         mViewModel.topAarticleResult.vmObserver(this) {
             onAppSuccess {
-                if (it.size > 0) {
-                    for (bean in it) {
-                        bean.top = true
+                it?.let {
+                    if (it.size > 0) {
+                        for (bean in it) {
+                            bean.top = true
+                        }
+                        topHomeArticle = it
                     }
-                    topHomeArticle = it
                 }
             }
             onAppError { it.errorMsg.log() }
@@ -157,9 +165,11 @@ class HomeFragment : BaseVmFragment() {
         mViewModel.articleResult.vmObserver(this) {
             onAppSuccess {
                 if (page == 0) homeArticle.articleList.addAll(topHomeArticle)
-                it.articleList.let { articles ->
-                    homeArticle.articleList.addAll(articles)
-                    articleAdapter.notifyDataSetChanged()
+                it?.let {
+                    it.articleList.let { articles ->
+                        homeArticle.articleList.addAll(articles)
+                        articleAdapter.notifyDataSetChanged()
+                    }
                 }
                 if (page == 0) {
                     mViewBinding.refresh.finishRefresh()
@@ -170,10 +180,11 @@ class HomeFragment : BaseVmFragment() {
             onAppError { it.errorMsg.log() }
         }
 
-        // 收藏文章
+        // 收藏/取消收藏文章
         mViewModel.collectArticleResult.vmObserver(this) {
             onAppSuccess {
-                homeArticle.articleList.get(collect_pos).collect = true
+                val bean = homeArticle.articleList.get(collect_pos)
+                bean.collect = !bean.collect
                 articleAdapter.notifyItemChanged(collect_pos)
             }
             onAppError { it.errorMsg.log() }

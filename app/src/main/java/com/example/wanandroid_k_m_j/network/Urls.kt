@@ -28,4 +28,9 @@ object Urls {
      * 收藏文章
      */
     const val Collect_Article = "lg/collect/user_article/update/{id}/json"
+
+    /**
+     * 取消收藏文章
+     */
+    const val unCollect_Article = "lg/uncollect_originId/{id}/json"
 }

@@ -8,12 +8,12 @@ import com.wanandroid.base.exception.AppException
  * @date:2022/2/23 9:35
  */
 class VmResult<T> {
-    var onAppSuccess: (data: T) -> Unit = {}
+    var onAppSuccess: (data: T?) -> Unit = {}
     var onAppError: (AppException) -> Unit = {}
     var onAppLoading: () -> Unit = {}
     var onAppComplete: () -> Unit = {}
 
-    fun onAppSuccess(success: (T) -> Unit) {
+    fun onAppSuccess(success: (T?) -> Unit) {
         onAppSuccess = success
     }
 
@@ -32,6 +32,6 @@ class VmResult<T> {
 
 sealed class VmState<out T> {
     object Loading : VmState<Nothing>()
-    data class Success<out T>(val data: T) : VmState<T>()
+    data class Success<out T>(val data: T?) : VmState<T>()
     data class Error(val error: AppException) : VmState<Nothing>()
 }

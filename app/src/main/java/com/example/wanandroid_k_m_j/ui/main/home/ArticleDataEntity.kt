@@ -20,6 +20,14 @@ import java.util.ArrayList
 @Keep
 @Entity
 @Parcelize
+data class ArticleEntity0(
+    var articleList: ArticleEntity = ArticleEntity(),
+    var toparticleList: ArrayList<ArticleDataEntity> = ArrayList()
+) : Parcelable
+
+@Keep
+@Entity
+@Parcelize
 data class ArticleEntity(
     @Id
     var dbId: Long = 0,

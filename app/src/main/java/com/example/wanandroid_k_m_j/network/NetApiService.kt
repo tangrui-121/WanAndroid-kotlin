@@ -34,4 +34,10 @@ interface NetApiService {
         @Field("link") link: String,
         @Field("author") author: String
     ): AppBaseEntity<T>
+
+    @POST(Urls.unCollect_Article)
+    suspend fun <T> unCollectArticle(
+        @Path("id") id: Long
+    ): AppBaseEntity<T>
+
 }

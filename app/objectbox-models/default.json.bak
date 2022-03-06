@@ -23,10 +23,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:1839682711209699571",
+      "lastPropertyId": "8:8900317863460286895",
+      "name": "ArticleEntity",
+      "properties": [
+        {
+          "id": "1:1908268591641569613",
+          "name": "dbId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2106617803194771482",
+          "name": "curPage",
+          "indexId": "2:1834523834087413144",
+          "type": 6,
+          "flags": 32808
+        },
+        {
+          "id": "3:5542979916932066175",
+          "name": "offset",
+          "type": 5
+        },
+        {
+          "id": "4:593860783581442538",
+          "name": "isOver",
+          "type": 1
+        },
+        {
+          "id": "5:281590164969761834",
+          "name": "pageCount",
+          "type": 5
+        },
+        {
+          "id": "6:3321950311531210636",
+          "name": "size",
+          "type": 5
+        },
+        {
+          "id": "7:8049470781890053733",
+          "name": "total",
+          "type": 5
+        },
+        {
+          "id": "8:8900317863460286895",
+          "name": "articleList",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:3672916592261425039",
-  "lastIndexId": "1:7300276900909706786",
+  "lastEntityId": "2:1839682711209699571",
+  "lastIndexId": "2:1834523834087413144",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

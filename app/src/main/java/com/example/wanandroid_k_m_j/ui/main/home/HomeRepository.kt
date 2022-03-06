@@ -28,4 +28,10 @@ class HomeRepository {
     ): AppBaseEntity<T> {
         return NetworkApi.getApi().collectArticle(id, title, link, author)
     }
+
+    suspend fun <T> unCollectArticle(
+        id: Long
+    ): AppBaseEntity<T> {
+        return NetworkApi.getApi().unCollectArticle(id)
+    }
 }
