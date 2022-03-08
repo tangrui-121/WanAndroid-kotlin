@@ -2,10 +2,10 @@ package com.example.wanandroid_k_m_j.ui.main.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.wanandroid_k_m_j.data.AppBaseEntity
 import com.wanandroid.base.BaseViewModel
 import com.wanandroid.base.ext.*
 import com.wanandroid.common.BaseEntity
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
@@ -19,53 +19,58 @@ class HomeViewModel : BaseViewModel() {
 
     private val homeRepository by lazy { HomeRepository() }
 
-    val articleResult0: VmLiveData<ArticleEntity0> = MutableLiveData()
-    val articleResult: VmLiveData<ArticleEntity> = MutableLiveData()
     val topAarticleResult: VmLiveData<ArrayList<ArticleDataEntity>> = MutableLiveData()
+    val articleResult: VmLiveData<ArticleEntity> = MutableLiveData()
     val collectArticleResult: VmLiveData<Any> = MutableLiveData()
 
-    fun <T> BaseViewModel.launchVmRequest(
-        request1: suspend () -> BaseEntity<ArticleEntity>,
-        request2: suspend () -> BaseEntity<ArrayList<ArticleDataEntity>>,
-        viewState: VmLiveData<ArticleEntity0>
+    /**
+     * 首页文章列表(含置顶)
+     */
+    fun getArticleWithTop() {
+        launchVmRequests(
+            { homeRepository.getTopArticle() },
+            { homeRepository.getArticle(0) },
+            topAarticleResult,
+            articleResult
+        )
+    }
+
+    fun BaseViewModel.launchVmRequests(
+        request1: suspend () -> AppBaseEntity<ArrayList<ArticleDataEntity>>,
+        request2: suspend () -> AppBaseEntity<ArticleEntity>,
+        viewState1: VmLiveData<ArrayList<ArticleDataEntity>>,
+        viewState2: VmLiveData<ArticleEntity>
     ) {
         viewModelScope.launch {
             runCatching {
-                viewState.value = VmState.Loading
-                val async1 = async {
-                    request1
-                }
-                val async2 = async {
-                    request2
-                }
+                viewState1.value = VmState.Loading
+                request1()
             }.onSuccess {
-                viewState.paresVmResult(it)
+                viewState1.paresVmResult(it)
             }.onFailure {
-                viewState.paresVmException(it)
+                viewState1.paresVmException(it)
+            }
+
+            runCatching {
+                viewState2.value = VmState.Loading
+                request2()
+            }.onSuccess {
+                viewState2.paresVmResult(it)
+            }.onFailure {
+                viewState2.paresVmException(it)
             }
         }
     }
 
     /**
-     * 首页文章列表
-     */
-    fun getArticle() {
-        launchVmRequest(
-            { homeRepository.getTopArticle() },
-            { homeRepository.getArticle(0) },
-            articleResult0
-        )
-    }
-
-    /**
-     * 首页文章列表
+     * 首页文章列表(不含置顶)
      */
     fun getArticle(page: Int) {
-        if (page == 0) {
-            launchVmRequest({
-                homeRepository.getTopArticle()
-            }, topAarticleResult)
-        }
+//        if (page == 0) {
+//            launchVmRequest({
+//                homeRepository.getTopArticle()
+//            }, topAarticleResult)
+//        }
         launchVmRequest({ homeRepository.getArticle(page) }, articleResult)
     }
 

@@ -51,8 +51,6 @@ class HomeFragment : BaseVmFragment() {
     // 总文章，由置顶文章和其他文章组成
     private var homeArticle: ArticleEntity = ArticleEntity()
 
-    // 置顶文章，由于不想先刷置顶再刷其他，想一起刷新，就先搞个置顶变量再一起addlist
-    private var topHomeArticle: ArrayList<ArticleDataEntity> = ArrayList()
     private var page = 0
     private var collect_pos = 0
 
@@ -137,7 +135,7 @@ class HomeFragment : BaseVmFragment() {
 
         mViewBinding.refresh.setOnRefreshListener {
             page = 0
-            mViewModel.getArticle(page)
+            mViewModel.getArticleWithTop()
         }
         mViewBinding.refresh.setOnLoadMoreListener {
             page++
@@ -155,7 +153,7 @@ class HomeFragment : BaseVmFragment() {
                         for (bean in it) {
                             bean.top = true
                         }
-                        topHomeArticle = it
+                        homeArticle.articleList.addAll(it)
                     }
                 }
             }
@@ -164,7 +162,6 @@ class HomeFragment : BaseVmFragment() {
         // 其他文章
         mViewModel.articleResult.vmObserver(this) {
             onAppSuccess {
-                if (page == 0) homeArticle.articleList.addAll(topHomeArticle)
                 it?.let {
                     it.articleList.let { articles ->
                         homeArticle.articleList.addAll(articles)

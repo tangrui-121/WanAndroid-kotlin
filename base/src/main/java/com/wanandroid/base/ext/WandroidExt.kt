@@ -70,36 +70,6 @@ fun <T> BaseViewModel.launchVmRequest(
 }
 
 /**
- * net requests
- * @param request request method
- * @param viewState request result
- */
-fun <T> BaseViewModel.launchVmRequests(
-    requests: List<suspend () -> BaseEntity<T>>,
-    viewStates: List<VmLiveData<T>>
-) {
-    viewModelScope.launch {
-        runCatching {
-            for (v in viewStates) {
-                v.value = VmState.Loading
-            }
-            val asyncs = arrayListOf<Deferred<*>>()
-            for (request in requests) {
-                asyncs.add(async { request })
-            }
-            for (a in asyncs) {
-                a.await()
-            }
-        }.onSuccess {
-//            viewState.paresVmResult(it)
-        }.onFailure {
-//            viewState.paresVmException(it)
-        }
-    }
-}
-
-
-/**
  * net request
  * @param request request method
  */
