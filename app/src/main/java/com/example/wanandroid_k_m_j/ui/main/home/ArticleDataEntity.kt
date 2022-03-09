@@ -16,6 +16,14 @@ import java.util.ArrayList
  * @link:
  * @date:2022/3/2 14:48
  */
+
+@Keep
+@Parcelize
+data class ArticleEntity0(
+    var toparticleList: ArrayList<ArticleDataEntity> = ArrayList(),
+    var articleList: ArticleEntity = ArticleEntity()
+) : Parcelable
+
 @Keep
 @Entity
 @Parcelize

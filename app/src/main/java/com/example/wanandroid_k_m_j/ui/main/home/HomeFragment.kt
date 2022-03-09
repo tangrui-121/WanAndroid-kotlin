@@ -15,6 +15,7 @@ import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleTagsBinding
 import com.example.wanandroid_k_m_j.ui.login.LoginHelper
+import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
 import com.example.wanandroid_k_m_j.utils.log
 import com.example.wanandroid_k_m_j.utils.singleClick
 import com.example.wanandroid_k_m_j.utils.visibleOrGone
@@ -22,7 +23,6 @@ import com.wanandroid.base.BaseVmFragment
 import com.wanandroid.base.adapter.BaseBindingAdapter
 import com.wanandroid.base.adapter.VBViewHolder
 import com.wanandroid.base.ext.vmObserver
-import java.util.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 
@@ -110,7 +110,6 @@ class HomeFragment : BaseVmFragment() {
                 holder.vb.itemArticleTitle.text = Html.fromHtml(item.title)
                 holder.vb.itemArticleTips.text = "${item.superChapterName}/${item.chapterName}"
                 holder.vb.itemArticleLike.isSelected = item.collect
-
                 holder.vb.itemArticleLike.singleClick {
                     LoginHelper.loginWith(requireContext()) {
                         collect_pos = getItemPosition(item)
@@ -130,6 +129,12 @@ class HomeFragment : BaseVmFragment() {
                 }
             }
         }
+        articleAdapter.setOnItemClickListener { adapter, view, position ->
+            SimpleWebviewActivity.start(
+                requireContext(),
+                homeArticle.articleList.get(position).link
+            )
+        }
         mViewBinding.rvHomearticle.adapter = articleAdapter
 
 
@@ -145,20 +150,25 @@ class HomeFragment : BaseVmFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
-        // 置顶文章
-        mViewModel.topAarticleResult.vmObserver(this) {
+        // 置顶文章 page = 0
+        mViewModel.articleResult_page0.vmObserver(this) {
             onAppSuccess {
+                mViewBinding.refresh.finishRefresh()
                 it?.let {
-                    if (it.size > 0) {
-                        for (bean in it) {
-                            bean.top = true
-                        }
-                        homeArticle.articleList.addAll(it)
+                    homeArticle.articleList.clear()
+                    homeArticle.articleList.addAll(it.toparticleList)
+                    for (bean in homeArticle.articleList) {
+                        bean.top = true
                     }
+                    homeArticle.articleList.addAll(it.articleList.articleList)
+                    articleAdapter.notifyDataSetChanged()
                 }
             }
-            onAppError { it.errorMsg.log() }
+            onAppError {
+
+            }
         }
+
         // 其他文章
         mViewModel.articleResult.vmObserver(this) {
             onAppSuccess {

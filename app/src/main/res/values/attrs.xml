@@ -152,4 +152,11 @@
         <attr name="pb_animDuration" format="integer" />
     </declare-styleable>
 
+
+    <style name="common_ProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">2dp</item>
+        <item name="android:minHeight">2dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/webview_progress</item>
+    </style>
 </resources>
