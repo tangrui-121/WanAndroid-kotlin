@@ -6,15 +6,23 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleTagsBinding
 import com.example.wanandroid_k_m_j.ui.login.LoginHelper
+import com.example.wanandroid_k_m_j.ui.main.MainActivity
+import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
 import com.example.wanandroid_k_m_j.utils.log
 import com.example.wanandroid_k_m_j.utils.singleClick
@@ -86,23 +94,8 @@ class HomeFragment : BaseVmFragment() {
                 if (item.tags.size > 0) {
                     // tags adapter
                     holder.vb.itemArticleTabs.layoutManager =
-                        GridLayoutManager(requireContext(), item.tags.size)
-                    holder.vb.itemArticleTabs.adapter = object :
-                        BaseBindingAdapter<ArticleTagEntity, ItemHomeArticleTagsBinding>(item.tags) {
-                        override fun createViewBinding(
-                            inflater: LayoutInflater,
-                            parent: ViewGroup
-                        ): ItemHomeArticleTagsBinding {
-                            return ItemHomeArticleTagsBinding.inflate(inflater, parent, false)
-                        }
-
-                        override fun convert(
-                            holder: VBViewHolder<ItemHomeArticleTagsBinding>,
-                            item: ArticleTagEntity
-                        ) {
-                            holder.vb.itemArticleTab.text = item.name
-                        }
-                    }
+                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                    holder.vb.itemArticleTabs.adapter = ArticleTabAdapter(item.tags)
                 }
                 holder.vb.itemArticleName.text =
                     if (item.author.isNotEmpty()) item.author else item.shareUser
@@ -196,5 +189,14 @@ class HomeFragment : BaseVmFragment() {
             }
             onAppError { it.errorMsg.log() }
         }
+    }
+}
+
+class ArticleTabAdapter(list: List<ArticleTagEntity>) :
+    BaseQuickAdapter<ArticleTagEntity, BaseViewHolder>
+        (R.layout.item_home_article_tags, list as MutableList<ArticleTagEntity>) {
+    override fun convert(holder: BaseViewHolder, item: ArticleTagEntity) {
+        val tab = holder.getView<TextView>(R.id.item_article_tab)
+        tab.text = item.name
     }
 }
