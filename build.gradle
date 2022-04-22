@@ -9,6 +9,7 @@ buildscript {
         classpath(WanAndroidExt.buildGradle)
         classpath(WanAndroidExt.kotlinGradlePlugin)
         classpath(WanAndroidExt.objectboxGradlePlugin)
+        classpath(WanAndroidExt.hilt_plugin)
     }
 }
 

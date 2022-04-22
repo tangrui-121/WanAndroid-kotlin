@@ -10,6 +10,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.tencent.mmkv.MMKV
+import dagger.hilt.android.HiltAndroidApp
 import kotlin.properties.Delegates
 
 
@@ -18,6 +19,7 @@ import kotlin.properties.Delegates
  * @description:
  * @date:2022/2/24 11:25
  */
+@HiltAndroidApp
 class WanAndroidApp: Application() {
 
     companion object {

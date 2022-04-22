@@ -11,7 +11,7 @@ object AppConfig {
 
 object Version {
     const val gradleVersion = "4.2.1"
-    const val kotlinVersion = "1.6.0"
+    const val kotlinVersion = "1.5.21"
     const val appcompatVersion = "1.3.1"
     const val ktxVersion = "1.3.2"
     const val constraintlayoutVersion = "2.1.1"
@@ -29,6 +29,7 @@ object Version {
     const val loggerVersion = "2.2.0"
     const val libVersionCode = 30
     const val libVersionName = "2.1.1"
+    const val hilt_version  = "2.38.1"
 }
 
 object WanAndroidExt {
@@ -78,4 +79,8 @@ object WanAndroidExt {
     const val SmartrefreshHead = "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0"
     // cookie持久化
     const val cookie = "com.github.franmontiel:PersistentCookieJar:v1.0.1"
+    // hilt
+    const val hilt_plugin = "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt_version}"
+    const val hilt = "com.google.dagger:hilt-android:${Version.hilt_version}"
+    const val hilt_compiler = "com.google.dagger:hilt-android-compiler:${Version.hilt_version}"
 }

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.WanAndroid_K_M_J"
         tools:targetApi="31">
         <activity
+            android:name=".hilt.HiltActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.webview.SimpleWebviewActivity"
             android:exported="false" />
         <activity

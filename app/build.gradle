@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -56,4 +57,9 @@ dependencies {
     implementation(WanAndroidExt.Smartrefresh)
     implementation(WanAndroidExt.SmartrefreshHead)
     implementation 'com.tencent:mmkv-static:1.0.23'
+
+    //hilt support begin
+    implementation(WanAndroidExt.hilt)
+    kapt(WanAndroidExt.hilt_compiler)
+    //hilt support end
 }

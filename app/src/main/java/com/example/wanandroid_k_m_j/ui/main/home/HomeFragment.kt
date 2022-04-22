@@ -1,6 +1,7 @@
 package com.example.wanandroid_k_m_j.ui.main.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleTagsBinding
+import com.example.wanandroid_k_m_j.hilt.HiltActivity
 import com.example.wanandroid_k_m_j.ui.login.LoginHelper
 import com.example.wanandroid_k_m_j.ui.main.MainActivity
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
@@ -104,21 +106,22 @@ class HomeFragment : BaseVmFragment() {
                 holder.vb.itemArticleTips.text = "${item.superChapterName}/${item.chapterName}"
                 holder.vb.itemArticleLike.isSelected = item.collect
                 holder.vb.itemArticleLike.singleClick {
-                    LoginHelper.loginWith(requireContext()) {
-                        collect_pos = getItemPosition(item)
-                        if (item.collect) {
-                            mViewModel.unCollectArticle(
-                                id = item.id
-                            )
-                        } else {
-                            mViewModel.collectArticle(
-                                id = item.id,
-                                title = item.title,
-                                link = item.link,
-                                author = item.author
-                            )
-                        }
-                    }
+                    startActivity(Intent(requireContext(),HiltActivity::class.java))
+//                    LoginHelper.loginWith(requireContext()) {
+//                        collect_pos = getItemPosition(item)
+//                        if (item.collect) {
+//                            mViewModel.unCollectArticle(
+//                                id = item.id
+//                            )
+//                        } else {
+//                            mViewModel.collectArticle(
+//                                id = item.id,
+//                                title = item.title,
+//                                link = item.link,
+//                                author = item.author
+//                            )
+//                        }
+//                    }
                 }
             }
         }
