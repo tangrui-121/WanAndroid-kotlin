@@ -24,23 +24,25 @@ class SimpleWebviewActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_URL = "url"
+        const val EXTRA_TITLE = "title"
 
         @JvmStatic
-        fun start(context: Context, url: String) =
+        fun start(context: Context, url: String, title: String) =
             context.startActivity(
-                Intent(context, SimpleWebviewActivity::class.java).putExtra(
-                    EXTRA_URL,
-                    url
-                )
+                Intent(context, SimpleWebviewActivity::class.java)
+                    .putExtra(EXTRA_URL, url)
+                    .putExtra(EXTRA_TITLE, title)
             )
     }
 
     lateinit var url_: String
+    lateinit var title_: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersive(darkMode = true)
         url_ = intent.getStringExtra(EXTRA_URL).toString()
+        title_ = intent.getStringExtra(EXTRA_TITLE).toString()
         initWebview()
         mViewBinding.webView.addJavascriptInterface(SimpleJavascript(), "baseJavascript")
         mViewBinding.webView.setWebChromeClient(webChromeClient)
@@ -92,7 +94,7 @@ class SimpleWebviewActivity : BaseActivity() {
         //获取网页标题
         override fun onReceivedTitle(view: WebView?, title: String) {
             super.onReceivedTitle(view, title)
-            mToolbar.setTitle(title)
+            mToolbar.setTitle(if (title_.isNotEmpty()) title_ else title)
         }
 
         //加载进度回调

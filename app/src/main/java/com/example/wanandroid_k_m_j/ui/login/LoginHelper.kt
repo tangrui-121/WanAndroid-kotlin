@@ -3,12 +3,9 @@ package com.example.wanandroid_k_m_j.ui.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Looper
-import com.example.wanandroid_k_m_j.helper.MvvmHelper
+import com.example.wanandroid_k_m_j.exts.isNull
 import com.example.wanandroid_k_m_j.helper.MvvmHelper.MVVM_KEY_ACCOUNT
 import com.example.wanandroid_k_m_j.helper.MvvmHelper.getMvvmNormal
-import com.example.wanandroid_k_m_j.utils.isNull
-import org.json.JSONObject
 
 /**
  * @author TangRui

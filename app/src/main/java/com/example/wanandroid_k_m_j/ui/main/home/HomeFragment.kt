@@ -1,17 +1,15 @@
 package com.example.wanandroid_k_m_j.ui.main.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -20,15 +18,11 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
-import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleTagsBinding
-import com.example.wanandroid_k_m_j.hilt.HiltActivity
+import com.example.wanandroid_k_m_j.exts.log
+import com.example.wanandroid_k_m_j.exts.singleClick
+import com.example.wanandroid_k_m_j.exts.visibleOrGone
 import com.example.wanandroid_k_m_j.ui.login.LoginHelper
-import com.example.wanandroid_k_m_j.ui.main.MainActivity
-import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
-import com.example.wanandroid_k_m_j.utils.log
-import com.example.wanandroid_k_m_j.utils.singleClick
-import com.example.wanandroid_k_m_j.utils.visibleOrGone
 import com.wanandroid.base.BaseVmFragment
 import com.wanandroid.base.adapter.BaseBindingAdapter
 import com.wanandroid.base.adapter.VBViewHolder
@@ -37,6 +31,12 @@ import com.wanandroid.base.ext.vmObserver
 private const val ARG_PARAM1 = "param1"
 
 class HomeFragment : BaseVmFragment() {
+
+    private val getACallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == Activity.RESULT_OK){
+
+        }
+    }
 
     companion object {
         @JvmStatic
@@ -106,29 +106,29 @@ class HomeFragment : BaseVmFragment() {
                 holder.vb.itemArticleTips.text = "${item.superChapterName}/${item.chapterName}"
                 holder.vb.itemArticleLike.isSelected = item.collect
                 holder.vb.itemArticleLike.singleClick {
-                    startActivity(Intent(requireContext(),HiltActivity::class.java))
-//                    LoginHelper.loginWith(requireContext()) {
-//                        collect_pos = getItemPosition(item)
-//                        if (item.collect) {
-//                            mViewModel.unCollectArticle(
-//                                id = item.id
-//                            )
-//                        } else {
-//                            mViewModel.collectArticle(
-//                                id = item.id,
-//                                title = item.title,
-//                                link = item.link,
-//                                author = item.author
-//                            )
-//                        }
-//                    }
+                    LoginHelper.loginWith(requireContext()) {
+                        collect_pos = getItemPosition(item)
+                        if (item.collect) {
+                            mViewModel.unCollectArticle(
+                                id = item.id
+                            )
+                        } else {
+                            mViewModel.collectArticle(
+                                id = item.id,
+                                title = item.title,
+                                link = item.link,
+                                author = item.author
+                            )
+                        }
+                    }
                 }
             }
         }
         articleAdapter.setOnItemClickListener { adapter, view, position ->
             SimpleWebviewActivity.start(
                 requireContext(),
-                homeArticle.articleList.get(position).link
+                homeArticle.articleList.get(position).link,
+                ""
             )
         }
         mViewBinding.rvHomearticle.adapter = articleAdapter

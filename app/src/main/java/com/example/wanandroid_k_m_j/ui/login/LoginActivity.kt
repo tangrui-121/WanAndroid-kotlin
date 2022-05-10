@@ -6,11 +6,11 @@ import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityLoginBinding
+import com.example.wanandroid_k_m_j.exts.log
+import com.example.wanandroid_k_m_j.exts.singleClick
 import com.example.wanandroid_k_m_j.helper.MvvmHelper.MVVM_KEY_ACCOUNT
 import com.example.wanandroid_k_m_j.helper.MvvmHelper.getMvvmNormal
 import com.example.wanandroid_k_m_j.utils.ToastAction.toast
-import com.example.wanandroid_k_m_j.utils.log
-import com.example.wanandroid_k_m_j.utils.singleClick
 import com.wanandroid.base.BaseVmActivity
 import com.wanandroid.base.ext.vmObserver
 import com.wanandroid.base.utils.immersive

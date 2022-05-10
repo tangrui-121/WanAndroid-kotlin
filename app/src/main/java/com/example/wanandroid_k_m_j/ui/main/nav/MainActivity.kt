@@ -1,10 +1,12 @@
 package com.example.wanandroid_k_m_j.ui.main
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,6 +20,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityMainBinding
+import com.example.wanandroid_k_m_j.exts.applyWindowInsets
+import com.example.wanandroid_k_m_j.exts.safelyInsets
 import com.example.wanandroid_k_m_j.ui.main.home.HomeFragment
 import com.example.wanandroid_k_m_j.ui.main.mine.MineFragment
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
@@ -25,6 +29,12 @@ import com.wanandroid.base.BaseActivity
 import com.wanandroid.base.utils.immersive
 
 class MainActivity : BaseActivity() {
+
+    private val getACallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == Activity.RESULT_OK){
+
+        }
+    }
 
     private val mViewBinding by viewBinding(ActivityMainBinding::bind)
 
@@ -52,6 +62,12 @@ class MainActivity : BaseActivity() {
         initView()
         mToolbar.visibility = View.GONE
         immersive(darkMode = true)
+
+        mViewBinding.root.applyWindowInsets {
+            val insets = it.safelyInsets()
+            // 顶部安全距离Fragment内处理
+            mViewBinding.root.setPadding(insets.left, 0, insets.right, insets.bottom)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

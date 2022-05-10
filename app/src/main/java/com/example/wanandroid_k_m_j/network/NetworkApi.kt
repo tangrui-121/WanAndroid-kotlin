@@ -1,7 +1,7 @@
 package com.example.wanandroid_k_m_j.network
 
 import com.example.wanandroid_k_m_j.WanAndroidApp.Companion.context
-import com.example.wanandroid_k_m_j.utils.httpLog
+import com.example.wanandroid_k_m_j.exts.httpLog
 import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache

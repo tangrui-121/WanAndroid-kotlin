@@ -1,15 +1,17 @@
-package com.example.wanandroid_k_m_j.utils
+package com.example.wanandroid_k_m_j.exts
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.TextView
-import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import com.example.wanandroid_k_m_j.BuildConfig
 import com.example.wanandroid_k_m_j.constant.WanAndroidConstant.HUB_LOG_TAG
+import com.example.wanandroid_k_m_j.utils.SingleClickListener
 import java.util.ArrayList
 import java.util.regex.Pattern
 
@@ -121,3 +123,5 @@ fun String.getAllSatisfyStr(regex: String?): ArrayList<String>? {
     }
     return allSatisfyStr
 }
+
+fun Context.color(@ColorRes colorRes: Int): Int = ContextCompat.getColor(this, colorRes)

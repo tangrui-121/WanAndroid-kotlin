@@ -83,4 +83,10 @@ object WanAndroidExt {
     const val hilt_plugin = "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt_version}"
     const val hilt = "com.google.dagger:hilt-android:${Version.hilt_version}"
     const val hilt_compiler = "com.google.dagger:hilt-android-compiler:${Version.hilt_version}"
+
+    // anko
+    const val anko = "org.jetbrains.anko:anko-sdk25:0.10.8"
+
+    // mmkv
+    const val mmkv = "com.tencent:mmkv-static:1.0.23"
 }
