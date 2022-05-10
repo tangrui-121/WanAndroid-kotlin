@@ -20,6 +20,7 @@ import java.util.ArrayList
 @Keep
 @Parcelize
 data class ArticleEntity0(
+    var bannerList: ArrayList<BannerData> = ArrayList(),
     var toparticleList: ArrayList<ArticleDataEntity> = ArrayList(),
     var articleList: ArticleEntity = ArticleEntity()
 ) : Parcelable
@@ -68,6 +69,23 @@ data class ArticleDataEntity(
 @Parcelize
 data class ArticleTagEntity(
     val name: String = "",
+    val url: String = ""
+) : Parcelable {
+    override fun toString(): String {
+        return this.toJsonString()
+    }
+}
+
+@Keep
+@Parcelize
+data class BannerData(
+    val desc: String = "",
+    val id: Int,
+    val imagePath: String = "",
+    val isVisible: Int,
+    val order: Int,
+    val title: String = "",
+    val type: Int,
     val url: String = ""
 ) : Parcelable {
     override fun toString(): String {

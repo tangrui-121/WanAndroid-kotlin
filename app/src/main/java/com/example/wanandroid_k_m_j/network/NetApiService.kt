@@ -4,6 +4,7 @@ import com.example.wanandroid_k_m_j.data.AppBaseEntity
 import com.example.wanandroid_k_m_j.ui.login.UserEntity
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleDataEntity
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleEntity
+import com.example.wanandroid_k_m_j.ui.main.home.BannerData
 import retrofit2.http.*
 import java.util.ArrayList
 
@@ -25,6 +26,9 @@ interface NetApiService {
 
     @GET(Urls.TOP_ARTICLE)
     suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>>
+
+    @GET("banner/json")
+    suspend fun getBanner(): AppBaseEntity<ArrayList<BannerData>>
 
     @POST(Urls.Collect_Article)
     @FormUrlEncoded

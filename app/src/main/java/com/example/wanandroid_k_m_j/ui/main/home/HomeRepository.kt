@@ -16,6 +16,10 @@ class HomeRepository {
         return NetworkApi.getApi().getArticle(page)
     }
 
+    suspend fun getBanner(): AppBaseEntity<ArrayList<BannerData>> {
+        return NetworkApi.getApi().getBanner()
+    }
+
     suspend fun getTopArticle(): AppBaseEntity<ArrayList<ArticleDataEntity>> {
         return NetworkApi.getApi().getTopArticle()
     }

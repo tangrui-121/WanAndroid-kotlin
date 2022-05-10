@@ -16,6 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
+import com.example.wanandroid_k_m_j.adapterHelper.addHeaderView
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.exts.log
@@ -136,7 +137,7 @@ class HomeFragment : BaseVmFragment() {
 
         mViewBinding.refresh.setOnRefreshListener {
             page = 0
-            mViewModel.getArticleWithTop()
+            mViewModel.getTopData()
         }
         mViewBinding.refresh.setOnLoadMoreListener {
             page++
@@ -146,8 +147,8 @@ class HomeFragment : BaseVmFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
-        // 置顶文章 page = 0
-        mViewModel.articleResult_page0.vmObserver(this) {
+        // banner、置顶文章、第一页文章
+        mViewModel.Result_TopData.vmObserver(this) {
             onAppSuccess {
                 mViewBinding.refresh.finishRefresh()
                 it?.let {
@@ -157,6 +158,8 @@ class HomeFragment : BaseVmFragment() {
                         bean.top = true
                     }
                     homeArticle.articleList.addAll(it.articleList.articleList)
+
+//                    mViewBinding.rvHomearticle.addHeaderView()
                     articleAdapter.notifyDataSetChanged()
                 }
             }
@@ -195,6 +198,9 @@ class HomeFragment : BaseVmFragment() {
     }
 }
 
+/**
+ * 文章tag adapter
+ */
 class ArticleTabAdapter(list: List<ArticleTagEntity>) :
     BaseQuickAdapter<ArticleTagEntity, BaseViewHolder>
         (R.layout.item_home_article_tags, list as MutableList<ArticleTagEntity>) {

@@ -25,19 +25,27 @@ class HomeViewModel : BaseViewModel() {
     val collectArticleResult: VmLiveData<Any> = MutableLiveData()
 
     /**
-     * 首页文章列表(含置顶)
+     * 首页文章列表(含置顶、banner)
      */
-    val articleResult_page0: MutableLiveData<VmState<ArticleEntity0>> = MutableLiveData()
-    fun getArticleWithTop() {
+    val Result_TopData: MutableLiveData<VmState<ArticleEntity0>> = MutableLiveData()
+    fun getTopData() {
         viewModelScope.launch {
+            var isSuccess0 = true
             var isSuccess1 = true
             var isSuccess2 = true
-            articleResult_page0.postValue(VmState.Loading)
+            Result_TopData.postValue(VmState.Loading)
             val articleEntity0 = ArticleEntity0()
+            val t0 = async { homeRepository.getBanner() }
             val t1 = async { homeRepository.getTopArticle() }
             val t2 = async { homeRepository.getArticle(0) }
+            var res0: AppBaseEntity<ArrayList<BannerData>>? = null
             var res1: AppBaseEntity<ArrayList<ArticleDataEntity>>? = null
             var res2: AppBaseEntity<ArticleEntity>? = null
+            try {
+                res0 = t0.await()
+            } catch (e: Exception) {
+                isSuccess0 = false
+            }
             try {
                 res1 = t1.await()
             } catch (e: Exception) {
@@ -48,12 +56,13 @@ class HomeViewModel : BaseViewModel() {
             } catch (e: Exception) {
                 isSuccess2 = false
             }
-            if (!isSuccess1 && !isSuccess2) {
-                articleResult_page0.postValue(VmState.Error(AppException("所有请求皆失败")))
+            if (!isSuccess0 && !isSuccess1 && !isSuccess2) {
+                Result_TopData.postValue(VmState.Error(AppException("所有请求皆失败")))
             } else {
+                articleEntity0.bannerList = res0?.data!!
                 articleEntity0.toparticleList = res1?.data!!
                 articleEntity0.articleList = res2?.data!!
-                articleResult_page0.postValue(VmState.Success(articleEntity0))
+                Result_TopData.postValue(VmState.Success(articleEntity0))
             }
         }
     }
