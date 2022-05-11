@@ -58,12 +58,12 @@ dependencies {
     implementation(WanAndroidExt.SmartrefreshHead)
     implementation(WanAndroidExt.anko)
     implementation(WanAndroidExt.mmkv)
+    implementation(WanAndroidExt.banner)
+    implementation(WanAndroidExt.glide)
+    implementation(WanAndroidExt.BRV)
 
     //hilt support begin
     implementation(WanAndroidExt.hilt)
     kapt(WanAndroidExt.hilt_compiler)
     //hilt support end
-
-    implementation 'com.google.dagger:hilt-android:2.30.1-alpha'
-    annotationProcessor 'com.google.dagger:hilt-android-compiler:2.30.1-alpha'
 }

@@ -16,32 +16,37 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
-import com.example.wanandroid_k_m_j.adapterHelper.addHeaderView
 import com.example.wanandroid_k_m_j.databinding.FragmentHomeBinding
 import com.example.wanandroid_k_m_j.databinding.ItemHomeArticleBinding
 import com.example.wanandroid_k_m_j.exts.log
 import com.example.wanandroid_k_m_j.exts.singleClick
 import com.example.wanandroid_k_m_j.exts.visibleOrGone
+import com.example.wanandroid_k_m_j.ui.banner.HomeBannerAdapter
 import com.example.wanandroid_k_m_j.ui.login.LoginHelper
 import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
 import com.wanandroid.base.BaseVmFragment
 import com.wanandroid.base.adapter.BaseBindingAdapter
 import com.wanandroid.base.adapter.VBViewHolder
 import com.wanandroid.base.ext.vmObserver
+import com.youth.banner.config.BannerConfig
+import com.youth.banner.config.IndicatorConfig
+import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.util.BannerUtils
 
 private const val ARG_PARAM1 = "param1"
 
 class HomeFragment : BaseVmFragment() {
 
-    private val getACallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == Activity.RESULT_OK){
+    private val getACallback =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
 
+            }
         }
-    }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
@@ -77,6 +82,7 @@ class HomeFragment : BaseVmFragment() {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        initBanner()
         mViewBinding.rvHomearticle.layoutManager = LinearLayoutManager(requireContext())
         articleAdapter = object :
             BaseBindingAdapter<ArticleDataEntity, ItemHomeArticleBinding>(homeArticle.articleList) {
@@ -128,12 +134,10 @@ class HomeFragment : BaseVmFragment() {
         articleAdapter.setOnItemClickListener { adapter, view, position ->
             SimpleWebviewActivity.start(
                 requireContext(),
-                homeArticle.articleList.get(position).link,
-                ""
+                homeArticle.articleList.get(position).link
             )
         }
         mViewBinding.rvHomearticle.adapter = articleAdapter
-
 
         mViewBinding.refresh.setOnRefreshListener {
             page = 0
@@ -152,6 +156,9 @@ class HomeFragment : BaseVmFragment() {
             onAppSuccess {
                 mViewBinding.refresh.finishRefresh()
                 it?.let {
+                    banners.clear()
+                    banners.addAll(it.bannerList)
+                    bannerAdapter.notifyDataSetChanged()
                     homeArticle.articleList.clear()
                     homeArticle.articleList.addAll(it.toparticleList)
                     for (bean in homeArticle.articleList) {
@@ -196,16 +203,31 @@ class HomeFragment : BaseVmFragment() {
             onAppError { it.errorMsg.log() }
         }
     }
+
+    val banners = ArrayList<BannerData>()
+    var bannerAdapter = HomeBannerAdapter(banners)
+
+    private fun initBanner() {
+        mViewBinding.homeBanner.setAdapter(bannerAdapter)
+        mViewBinding.homeBanner.setIndicator(CircleIndicator(requireContext()))
+        mViewBinding.homeBanner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
+        mViewBinding.homeBanner.setOnBannerListener { data: Any, position: Int ->
+            SimpleWebviewActivity.start(requireContext(), (data as BannerData).url)
+        }
+        mViewBinding.homeBanner.setIndicatorMargins(
+            IndicatorConfig.Margins(0, 0, BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(12f))
+        )
+    }
 }
 
 /**
- * 文章tag adapter
+ * tag adapter
  */
 class ArticleTabAdapter(list: List<ArticleTagEntity>) :
     BaseQuickAdapter<ArticleTagEntity, BaseViewHolder>
-        (R.layout.item_home_article_tags, list as MutableList<ArticleTagEntity>) {
+        (R.layout.item_common_tags, list as MutableList<ArticleTagEntity>) {
     override fun convert(holder: BaseViewHolder, item: ArticleTagEntity) {
-        val tab = holder.getView<TextView>(R.id.item_article_tab)
+        val tab = holder.getView<TextView>(R.id.item_tabname)
         tab.text = item.name
     }
 }

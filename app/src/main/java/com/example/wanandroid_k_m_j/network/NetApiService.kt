@@ -2,6 +2,7 @@ package com.example.wanandroid_k_m_j.network
 
 import com.example.wanandroid_k_m_j.data.AppBaseEntity
 import com.example.wanandroid_k_m_j.ui.login.UserEntity
+import com.example.wanandroid_k_m_j.ui.main.answer.AnswerListEntity
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleDataEntity
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleEntity
 import com.example.wanandroid_k_m_j.ui.main.home.BannerData
@@ -44,4 +45,7 @@ interface NetApiService {
         @Path("id") id: Long
     ): AppBaseEntity<T>
 
+
+    @GET("wenda/list/{page}/json")
+    suspend fun getAnswers(@Path("page") page: Int): AppBaseEntity<AnswerListEntity>
 }

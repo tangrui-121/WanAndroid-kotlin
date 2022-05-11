@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.main.home.HomeFragment">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.drake.brv.PageRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_answers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.youth.banner.Banner
-                android:id="@+id/home_banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_180" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_homearticle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </com.drake.brv.PageRefreshLayout>
 
     <TextView
         android:id="@+id/banner_title"
@@ -35,6 +26,6 @@
         android:layout_alignParentBottom="true"
         android:background="@color/black15"
         android:padding="@dimen/dp_10"
-        android:text="首页采用BRVAH实现"
+        android:text="问答采用BRV实现"
         android:textColor="#ffffff" />
 </RelativeLayout>

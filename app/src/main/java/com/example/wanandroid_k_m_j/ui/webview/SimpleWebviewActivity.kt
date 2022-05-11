@@ -11,9 +11,10 @@ import android.webkit.*
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivitySimpleWebviewBinding
+import com.example.wanandroid_k_m_j.exts.applyWindowInsets
+import com.example.wanandroid_k_m_j.exts.safelyInsets
 import com.example.wanandroid_k_m_j.utils.ToastAction.toast
 import com.wanandroid.base.BaseActivity
-import com.wanandroid.base.utils.immersive
 
 class SimpleWebviewActivity : BaseActivity() {
 
@@ -27,7 +28,7 @@ class SimpleWebviewActivity : BaseActivity() {
         const val EXTRA_TITLE = "title"
 
         @JvmStatic
-        fun start(context: Context, url: String, title: String) =
+        fun start(context: Context, url: String, title: String = "") =
             context.startActivity(
                 Intent(context, SimpleWebviewActivity::class.java)
                     .putExtra(EXTRA_URL, url)
@@ -40,7 +41,10 @@ class SimpleWebviewActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        immersive(darkMode = true)
+        mViewBinding.root.applyWindowInsets {
+            val insets = it.safelyInsets()
+            mViewBinding.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+        }
         url_ = intent.getStringExtra(EXTRA_URL).toString()
         title_ = intent.getStringExtra(EXTRA_TITLE).toString()
         initWebview()

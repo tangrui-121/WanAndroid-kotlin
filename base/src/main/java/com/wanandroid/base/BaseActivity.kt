@@ -5,14 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.example.base1.R
-import com.wanandroid.base.utils.immersive
-import com.wanandroid.base.utils.statusPadding
 
 /**
  * @author TangRui
@@ -27,8 +24,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
-        val appBackground = findViewById<LinearLayout>(R.id.appBackground)
-        appBackground.statusPadding()
         val viewContent = findViewById<FrameLayout>(R.id.viewContent)
         LayoutInflater.from(this).inflate(layoutId, viewContent)
         initView(savedInstanceState)

@@ -89,4 +89,13 @@ object WanAndroidExt {
 
     // mmkv
     const val mmkv = "com.tencent:mmkv-static:1.0.23"
+
+    // banner
+    const val banner = "io.github.youth5201314:banner:2.2.2"
+
+    // glide
+    const val glide = "com.github.bumptech.glide:glide:4.13.0"
+
+    // BRV
+    const val BRV = "com.github.liangjingkanji:BRV:1.3.63"
 }

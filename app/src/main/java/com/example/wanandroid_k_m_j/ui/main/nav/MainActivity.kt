@@ -22,6 +22,7 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityMainBinding
 import com.example.wanandroid_k_m_j.exts.applyWindowInsets
 import com.example.wanandroid_k_m_j.exts.safelyInsets
+import com.example.wanandroid_k_m_j.ui.main.answer.AnswerFragment
 import com.example.wanandroid_k_m_j.ui.main.home.HomeFragment
 import com.example.wanandroid_k_m_j.ui.main.mine.MineFragment
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
@@ -49,7 +50,7 @@ class MainActivity : BaseActivity() {
         tabList.add(MainTab("首页3", R.drawable.home_home_selector, false))
 
         fragmentList.add(HomeFragment())
-        fragmentList.add(MineFragment())
+        fragmentList.add(AnswerFragment())
         fragmentList.add(MineFragment())
         fragmentList.add(MineFragment())
     }
