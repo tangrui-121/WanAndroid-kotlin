@@ -69,6 +69,7 @@ class MainActivity : BaseActivity() {
             // 顶部安全距离Fragment内处理
             mViewBinding.root.setPadding(insets.left, 0, insets.right, insets.bottom)
         }
+        mViewBinding.vpHomePager.isUserInputEnabled = false // vp2禁止滑动
     }
 
     @SuppressLint("NotifyDataSetChanged")

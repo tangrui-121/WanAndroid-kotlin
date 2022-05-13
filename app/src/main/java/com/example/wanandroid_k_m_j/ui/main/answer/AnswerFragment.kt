@@ -14,7 +14,9 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentAnswerBinding
 import com.example.wanandroid_k_m_j.databinding.ItemAnswerBinding
 import com.example.wanandroid_k_m_j.databinding.ItemCommonTagsBinding
+import com.example.wanandroid_k_m_j.exts.applyWindowInsets
 import com.example.wanandroid_k_m_j.exts.gone
+import com.example.wanandroid_k_m_j.exts.safelyInsets
 import com.example.wanandroid_k_m_j.exts.visible
 import com.example.wanandroid_k_m_j.ui.main.home.ArticleTagEntity
 import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
@@ -31,13 +33,21 @@ class AnswerFragment : BaseVmFragment() {
     private val mViewModel by viewModels<AnswerViewModel>()
     private val mViewBinding by viewBinding(FragmentAnswerBinding::bind)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding.root.applyWindowInsets {
+            val insets = it.safelyInsets()
+            mViewBinding.root.setPadding(0, insets.top, 0, 0)
+        }
+    }
+
     override fun addData() {
 //        mViewBinding.refresh.autoRefresh()
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         initRv()
-        mViewBinding.refresh.apply {
+        mViewBinding.brvRefresh.apply {
             onRefresh {
                 page = 1
                 mViewModel.getAnswers(page)
@@ -47,14 +57,25 @@ class AnswerFragment : BaseVmFragment() {
                 mViewModel.getAnswers(page)
             }
         }.autoRefresh()
+
+//        mViewBinding.refresh.setOnRefreshListener {
+//            page = 1
+//            mViewModel.getAnswers(page)
+//        }
+//        mViewBinding.refresh.setOnLoadMoreListener {
+//            page++
+//            mViewModel.getAnswers(page)
+//        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
         mViewModel.answerListResult.vmObserver(this) {
             onAppSuccess {
+                mViewBinding.brvRefresh.finishRefresh()
                 it?.let {
-                    mViewBinding.refresh.addData(it.datas)
+//                    mViewBinding.rvAnswers.adapter?.notifyDataSetChanged()
+                    mViewBinding.brvRefresh.addData(it.datas)
                 }
             }
         }

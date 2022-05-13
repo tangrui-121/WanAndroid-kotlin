@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.main.home.HomeFragment">
-
+<!--    com.scwang.smartrefresh.layout.SmartRefreshLayout-->
     <com.drake.brv.PageRefreshLayout
-        android:id="@+id/refresh"
+        android:id="@+id/brv_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
