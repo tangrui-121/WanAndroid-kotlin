@@ -4,8 +4,8 @@ object AppConfig {
     const val versionCode = 1
     const val applicationId = "com.example.wanandroid_k_m_j"
     const val buildToolsVersion = "30.0.3"
-    const val compileSdkVersion = 30
-    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+    const val targetSdkVersion = 31
     const val minSdkVersion = 21
 }
 
@@ -26,7 +26,6 @@ object Version {
     //http://jcenter.bintray.com/com/squareup/okhttp3/logging-interceptor/
     const val okhttp3LogVersion = "4.9.1"
     const val materialVersion = "1.4.0"
-    const val loggerVersion = "2.2.0"
     const val libVersionCode = 30
     const val libVersionName = "2.1.1"
     const val hilt_version  = "2.38.1"
@@ -58,8 +57,6 @@ object WanAndroidExt {
     // https://github.com/objectbox/objectbox-java
     const val objectboxGradlePlugin = "io.objectbox:objectbox-gradle-plugin:3.0.1"
 
-    //https://github.com/orhanobut/logger
-    const val logger = "com.orhanobut:logger:${Version.loggerVersion}"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.4"
     const val activityKtx = "androidx.activity:activity-ktx:1.2.3"
 

@@ -54,7 +54,6 @@ dependencies {
     api(WanAndroidExt.coroutines)
     api(WanAndroidExt.okhttp3Log)
     api(WanAndroidExt.material)
-    api(WanAndroidExt.logger)
     api(WanAndroidExt.fragmentKtx)
     api(WanAndroidExt.activityKtx)
     api(WanAndroidExt.ImmersionBar)

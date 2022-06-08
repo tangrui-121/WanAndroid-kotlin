@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.example.wanandroid_k_m_j.utils.ToastStyle
 import com.hjq.toast.ToastUtils
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -24,10 +22,14 @@ class WanAndroidApp: Application() {
 
     companion object {
 
+        private var instance: WanAndroidApp? = null
+
+        fun get(): WanAndroidApp {
+            return checkNotNull(instance) { "WanAndroidApp is not initialized" }
+        }
+
         var context: Context by Delegates.notNull()
             private set
-
-        lateinit var instance: Application
     }
 
     override fun onCreate() {
@@ -43,8 +45,6 @@ class WanAndroidApp: Application() {
         // 吐司
         ToastUtils.init(application, ToastStyle())
         ToastUtils.setDebugMode(BuildConfig.DEBUG)
-        // Logger
-        Logger.addLogAdapter(AndroidLogAdapter())
         // MMKV
         val rootDir: String = MMKV.initialize(application)
     }

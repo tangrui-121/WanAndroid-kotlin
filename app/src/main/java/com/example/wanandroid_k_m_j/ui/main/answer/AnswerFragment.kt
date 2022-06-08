@@ -7,26 +7,20 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.drake.brv.utils.addModels
-import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
 import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.FragmentAnswerBinding
 import com.example.wanandroid_k_m_j.databinding.ItemAnswerBinding
 import com.example.wanandroid_k_m_j.databinding.ItemCommonTagsBinding
 import com.example.wanandroid_k_m_j.exts.applyWindowInsets
-import com.example.wanandroid_k_m_j.exts.gone
 import com.example.wanandroid_k_m_j.exts.safelyInsets
-import com.example.wanandroid_k_m_j.exts.visible
-import com.example.wanandroid_k_m_j.ui.main.home.ArticleTagEntity
 import com.example.wanandroid_k_m_j.ui.webview.SimpleWebviewActivity
 import com.wanandroid.base.BaseVmFragment
 import com.wanandroid.base.ext.vmObserver
 
 class AnswerFragment : BaseVmFragment() {
 
-    override val layoutId: Int
-        get() = R.layout.fragment_answer
+    override val layoutId: Int get() = R.layout.fragment_answer
 
     private var page = 1
 
@@ -42,7 +36,7 @@ class AnswerFragment : BaseVmFragment() {
     }
 
     override fun addData() {
-//        mViewBinding.refresh.autoRefresh()
+
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -57,15 +51,6 @@ class AnswerFragment : BaseVmFragment() {
                 mViewModel.getAnswers(page)
             }
         }.autoRefresh()
-
-//        mViewBinding.refresh.setOnRefreshListener {
-//            page = 1
-//            mViewModel.getAnswers(page)
-//        }
-//        mViewBinding.refresh.setOnLoadMoreListener {
-//            page++
-//            mViewModel.getAnswers(page)
-//        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -74,7 +59,6 @@ class AnswerFragment : BaseVmFragment() {
             onAppSuccess {
                 mViewBinding.brvRefresh.finishRefresh()
                 it?.let {
-//                    mViewBinding.rvAnswers.adapter?.notifyDataSetChanged()
                     mViewBinding.brvRefresh.addData(it.datas)
                 }
             }
@@ -115,4 +99,3 @@ class AnswerFragment : BaseVmFragment() {
         }
     }
 }
-

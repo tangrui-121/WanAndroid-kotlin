@@ -4,8 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.PrettyFormatStrategy
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
@@ -14,20 +12,6 @@ import java.lang.reflect.Type
  * @description: 通用扩展
  * @date:2022/2/23 10:30
  */
-
-
-/**
- * 设置是否打印和打印tag
- */
-fun String.logTagDebug(debug: Boolean): AndroidLogAdapter {
-    val formatStrategy = PrettyFormatStrategy.newBuilder()
-        .showThreadInfo(false).methodCount(1).tag(this).build()
-    return object : AndroidLogAdapter(formatStrategy) {
-        override fun isLoggable(priority: Int, tag: String?): Boolean {
-            return debug
-        }
-    }
-}
 
 /**
  * 转换String

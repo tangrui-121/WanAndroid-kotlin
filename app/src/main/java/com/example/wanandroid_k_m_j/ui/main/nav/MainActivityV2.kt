@@ -1,6 +1,7 @@
 package com.example.wanandroid_k_m_j.ui.main
 
 import android.os.Bundle
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wanandroid_k_m_j.R
@@ -30,6 +31,13 @@ class MainActivityV2 : AppCompatActivity(R.layout.activity_mainv2) {
             showFragment(checkedId)
         }
         showFragment(R.id.tab_home)
+
+        findViewById<RadioGroup>(R.id.bottom_bars).post {
+
+        }
+        findViewById<RadioGroup>(R.id.bottom_bars).postOnAnimation {
+
+        }
     }
 
     private fun showFragment(checkedId: Int) {
