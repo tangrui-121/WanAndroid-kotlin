@@ -2,6 +2,7 @@ package com.example.wanandroid_k_m_j.ui.main
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -22,12 +23,14 @@ import com.example.wanandroid_k_m_j.R
 import com.example.wanandroid_k_m_j.databinding.ActivityMainBinding
 import com.example.wanandroid_k_m_j.exts.applyWindowInsets
 import com.example.wanandroid_k_m_j.exts.safelyInsets
+import com.example.wanandroid_k_m_j.exts.singleClick
 import com.example.wanandroid_k_m_j.ui.main.answer.AnswerFragment
 import com.example.wanandroid_k_m_j.ui.main.home.HomeFragment
 import com.example.wanandroid_k_m_j.ui.main.mine.MineFragment
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.wanandroid.base.BaseActivity
 import com.wanandroid.base.utils.immersive
+import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : BaseActivity() {
 

@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
@@ -17,3 +17,10 @@ dependencyResolutionManagement {
 rootProject.name = "WanAndroid_K_M_J"
 include ':app'
 include ':base'
+
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir,  // 项目同级目录的File路径
+        'my_flutter/.android/include_flutter.groovy'
+))
+include ':my_flutter'
