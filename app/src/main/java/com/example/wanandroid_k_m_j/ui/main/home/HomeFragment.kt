@@ -167,6 +167,8 @@ class HomeFragment : BaseVmFragment() {
 
 //                    mViewBinding.rvHomearticle.addHeaderView()
                     articleAdapter.notifyDataSetChanged()
+
+                    page++
                 }
             }
             onAppError {
@@ -181,6 +183,7 @@ class HomeFragment : BaseVmFragment() {
                     it.articleList.let { articles ->
                         homeArticle.articleList.addAll(articles)
                         articleAdapter.notifyDataSetChanged()
+                        page++
                     }
                 }
                 if (page == 0) {
@@ -188,7 +191,6 @@ class HomeFragment : BaseVmFragment() {
                 } else {
                     mViewBinding.refresh.finishLoadMore()
                 }
-                page++
             }
             onAppError { it.errorMsg.log() }
         }

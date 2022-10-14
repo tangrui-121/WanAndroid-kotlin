@@ -68,6 +68,7 @@ dependencies {
     implementation(WanAndroidExt.banner)
     implementation(WanAndroidExt.glide)
     implementation(WanAndroidExt.BRV)
+    implementation 'io.github.scwang90:refresh-header-classics:2.0.5'
 
     //hilt support begin
     implementation(WanAndroidExt.hilt)
