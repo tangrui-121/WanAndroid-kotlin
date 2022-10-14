@@ -36,7 +36,7 @@ class AnswerFragment : BaseVmFragment() {
     }
 
     override fun addData() {
-
+        mViewModel.getAnswers(page)
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -47,19 +47,18 @@ class AnswerFragment : BaseVmFragment() {
                 mViewModel.getAnswers(page)
             }
             onLoadMore {
-                page++
                 mViewModel.getAnswers(page)
             }
-        }.autoRefresh()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
         mViewModel.answerListResult.vmObserver(this) {
             onAppSuccess {
-                mViewBinding.brvRefresh.finishRefresh()
                 it?.let {
-                    mViewBinding.brvRefresh.addData(it.datas)
+                    mViewBinding.brvRefresh.addData(data = it.datas, hasMore = { true })
+                    page++
                 }
             }
         }

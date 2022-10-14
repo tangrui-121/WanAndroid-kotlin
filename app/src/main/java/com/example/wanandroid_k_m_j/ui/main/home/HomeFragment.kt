@@ -144,7 +144,6 @@ class HomeFragment : BaseVmFragment() {
             mViewModel.getTopData()
         }
         mViewBinding.refresh.setOnLoadMoreListener {
-            page++
             mViewModel.getArticle(page)
         }
     }
@@ -189,6 +188,7 @@ class HomeFragment : BaseVmFragment() {
                 } else {
                     mViewBinding.refresh.finishLoadMore()
                 }
+                page++
             }
             onAppError { it.errorMsg.log() }
         }
