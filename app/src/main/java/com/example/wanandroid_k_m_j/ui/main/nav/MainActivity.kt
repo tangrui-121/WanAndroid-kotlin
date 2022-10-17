@@ -73,6 +73,12 @@ class MainActivity : BaseActivity() {
             mViewBinding.root.setPadding(insets.left, 0, insets.right, insets.bottom)
         }
         mViewBinding.vpHomePager.isUserInputEnabled = false // vp2禁止滑动
+
+        mViewBinding.aaaaa.singleClick {
+            startActivity(FlutterActivity.withNewEngine()
+                .initialRoute("tab1") //initialRoute是Android跳转到flutter需要的参数，这里传入“tab1”,表示跳转到flutter的tab1页面
+                .build(this))
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

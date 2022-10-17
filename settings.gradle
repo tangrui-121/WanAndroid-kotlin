@@ -21,6 +21,6 @@ include ':base'
 setBinding(new Binding([gradle: this]))
 evaluate(new File(
         settingsDir,  // 项目同级目录的File路径
-        'my_flutter/.android/include_flutter.groovy'
+        'myflutter/.android/include_flutter.groovy'
 ))
-include ':my_flutter'
+include ':myflutter'

@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaaa"
+        android:id="@+id/aaaaa"
+        android:layout_marginTop="100dp"/>
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_home_pager"
         android:layout_width="match_parent"
