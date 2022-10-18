@@ -31,6 +31,7 @@ import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.wanandroid.base.BaseActivity
 import com.wanandroid.base.utils.immersive
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragment
 
 class MainActivity : BaseActivity() {
 
@@ -54,7 +55,7 @@ class MainActivity : BaseActivity() {
 
         fragmentList.add(HomeFragment())
         fragmentList.add(AnswerFragment())
-        fragmentList.add(MineFragment())
+        fragmentList.add(FlutterFragment())
         fragmentList.add(MineFragment())
     }
 
@@ -74,9 +75,14 @@ class MainActivity : BaseActivity() {
         }
         mViewBinding.vpHomePager.isUserInputEnabled = false // vp2禁止滑动
 
-        mViewBinding.aaaaa.singleClick {
+        mViewBinding.gotologin.singleClick {
             startActivity(FlutterActivity.withNewEngine()
                 .initialRoute("tab1") //initialRoute是Android跳转到flutter需要的参数，这里传入“tab1”,表示跳转到flutter的tab1页面
+                .build(this))
+        }
+        mViewBinding.gotoset.singleClick {
+            startActivity(FlutterActivity.withNewEngine()
+                .initialRoute("home")
                 .build(this))
         }
     }
