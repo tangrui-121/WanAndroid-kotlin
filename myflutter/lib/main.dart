@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'AAA.dart';
+import 'RoundImage.dart' as roundImage;
+
 void main() => runApp(const MyApp());
 
 // class MyApp extends StatelessWidget {
@@ -44,6 +47,10 @@ class MyApp extends StatelessWidget {
         return MyHomePage(title: 'I am home');
       case 'tab1':
         return MyHomePage(title: 'I am tab1');
+      case 'tab2':
+        return SampleApp();
+      case 'roundImage':
+        return roundImage.SampleApp();
       default:
         return MyHomePage(title: 'I am home hot load');
     }

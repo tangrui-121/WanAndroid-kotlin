@@ -85,6 +85,11 @@ class MainActivity : BaseActivity() {
                 .initialRoute("home")
                 .build(this))
         }
+        mViewBinding.gotoroundimage.singleClick {
+            startActivity(FlutterActivity.withNewEngine()
+                .initialRoute("roundImage")
+                .build(this))
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
