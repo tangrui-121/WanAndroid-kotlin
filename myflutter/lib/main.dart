@@ -3,25 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'AAA.dart';
+import 'Routes.dart' as routes;
 import 'RoundImage.dart' as roundImage;
 
-void main() => runApp(const MyApp());
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
+void main() => runApp(MaterialApp(
+      initialRoute: routes.homePage,
+      onGenerateRoute: routes.onGenerateRoute,
+    ));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -33,10 +21,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // routes: <String, WidgetBuilder>{
-      //   "home": (context) => MyHomePage(title: 'I am home'),
-      //   "tab1": (context) => MyHomePage(title: 'I am tab1'),
-      // },
       home: _widgetForRoute(window.defaultRouteName), //根据传Activity过来的值打开相应页面
     );
   }
@@ -54,6 +38,22 @@ class MyApp extends StatelessWidget {
       default:
         return MyHomePage(title: 'I am home hot load');
     }
+  }
+}
+
+class MyBottomNavigationBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+        iconSize: 35, //图标大小 35
+        fixedColor: Colors.green, //图片颜色绿色
+        type: BottomNavigationBarType.fixed, //item 固定显示
+        items: [
+          //设置了 3 个 子 item
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: "图片"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "设置")
+        ]);
   }
 }
 
@@ -82,19 +82,30 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'flutter module have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+          child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'pushed :',
+              ),
+              SizedBox(width: 20),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, routes.imagePage,arguments: 'hahh');
+            },
+            child: Text("去列表页"),
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

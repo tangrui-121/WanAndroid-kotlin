@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 
+import 'Routes.dart' as routes;
+
 void main() {
   runApp(const SampleApp());
 }
 
 class SampleApp extends StatelessWidget {
-  const SampleApp({super.key});
+  const SampleApp({this.arguments});
+
+  final arguments;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return
+      Scaffold(
           appBar: AppBar(
-            title: Text('Flutter network image'),
+            title: Text(arguments),
             elevation: 30,
           ),
-          body: MyBodyPage1()),
-    );
+          body: MyBodyPage1());
   }
 }
 
@@ -29,7 +32,15 @@ class MyBodyPage1 extends StatelessWidget {
         Row(
           children: [
             MyBodyPage(),
+            SizedBox(width: 40),
             MyBodyPage(),
+            SizedBox(width: 40),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("返回"),
+            ),
           ],
         ),
         Expanded(
@@ -46,12 +57,17 @@ class MyBodyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipOval(
       //圆形图片
-      child: Image.network(
-        "https://img.lianzhixiu.com/uploads/210106/37-21010609363aS.jpg",
-        width: 100,
-        height: 100,
-        fit: BoxFit.cover,
-      ),
+      child: InkWell(
+        child: Image.network(
+          "https://img.lianzhixiu.com/uploads/210106/37-21010609363aS.jpg",
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        ),
+        onTap: (){
+          Navigator.pushNamed(context, routes.httplist);
+        },
+      )
     );
   }
 }
