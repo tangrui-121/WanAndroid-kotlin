@@ -4,8 +4,8 @@ object AppConfig {
     const val versionCode = 1
     const val applicationId = "com.example.wanandroid_k_m_j"
     const val buildToolsVersion = "30.0.3"
-    const val compileSdkVersion = 30
-    const val targetSdkVersion = 30
+    const val compileSdkVersion = 31
+    const val targetSdkVersion = 31
     const val minSdkVersion = 21
 }
 

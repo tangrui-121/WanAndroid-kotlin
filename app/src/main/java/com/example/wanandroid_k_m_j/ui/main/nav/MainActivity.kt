@@ -32,7 +32,6 @@ import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.wanandroid.base.BaseActivity
 import com.wanandroid.base.utils.immersive
 import io.flutter.embedding.android.FlutterFragment
-<<<<<<< HEAD
 
 class MainActivity : BaseActivity() {
 
@@ -40,33 +39,7 @@ class MainActivity : BaseActivity() {
 //    private val mViewBinding by viewBinding(ActivityMainBinding::bind)
 
     private val mViewBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-=======
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineCache
-import io.flutter.embedding.engine.dart.DartExecutor
-import java.util.concurrent.ConcurrentHashMap
 
-class MainActivity : BaseActivity() {
-
-    /**
-     * 原生跳转flutter卡顿
-     * 缓存FlutterEngine
-     */
-    companion object{
-        //缓存 FlutterEngine 的 key
-        const val FLUTTER_ENGINE_ID = "default"
-    }
-    //FlutterEngine
-    private lateinit var flutterEngine: FlutterEngine
-
-    private val getACallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == Activity.RESULT_OK){
-
-        }
-    }
-
-    private val mViewBinding by viewBinding(ActivityMainBinding::bind)
->>>>>>> 1a9b8af7c4f2028828a8f26bcfd096a82c805b2b
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
     private val tabList: MutableList<MainTab> = ArrayList()
