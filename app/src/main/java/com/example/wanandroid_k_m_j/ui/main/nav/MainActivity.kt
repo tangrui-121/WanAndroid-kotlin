@@ -1,14 +1,12 @@
 package com.example.wanandroid_k_m_j.ui.main
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -16,7 +14,6 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wanandroid_k_m_j.R
@@ -24,39 +21,22 @@ import com.example.wanandroid_k_m_j.databinding.ActivityMainBinding
 import com.example.wanandroid_k_m_j.exts.applyWindowInsets
 import com.example.wanandroid_k_m_j.exts.safelyInsets
 import com.example.wanandroid_k_m_j.exts.singleClick
+import com.example.wanandroid_k_m_j.gotoflutter.Go2FlutterActivity
+import com.example.wanandroid_k_m_j.livedata_activityresult.TakePhotoActivity
 import com.example.wanandroid_k_m_j.ui.main.answer.AnswerFragment
 import com.example.wanandroid_k_m_j.ui.main.home.HomeFragment
 import com.example.wanandroid_k_m_j.ui.main.mine.MineFragment
 import com.example.wanandroid_k_m_j.ui.main.nav.MainTab
 import com.wanandroid.base.BaseActivity
 import com.wanandroid.base.utils.immersive
-import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterFragment
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineCache
-import io.flutter.embedding.engine.dart.DartExecutor
 
 class MainActivity : BaseActivity() {
 
+    // 这里viewBinding委托会报DrawerLayout和LinearLayout转化异常
+//    private val mViewBinding by viewBinding(ActivityMainBinding::bind)
 
-    /**
-     * 原生跳转flutter卡顿
-     * 缓存FlutterEngine
-     */
-    companion object{
-        //缓存 FlutterEngine 的 key
-        const val FLUTTER_ENGINE_ID = "default"
-    }
-    //FlutterEngine
-    private lateinit var flutterEngine: FlutterEngine
-
-    private val getACallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == Activity.RESULT_OK){
-
-        }
-    }
-
-    private val mViewBinding by viewBinding(ActivityMainBinding::bind)
+    private val mViewBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
     private val tabList: MutableList<MainTab> = ArrayList()
@@ -79,62 +59,23 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(mViewBinding.root)
+        initBar()
         initView()
+        initDrawerLayout()
+    }
+
+    private fun initBar() {
         mToolbar.visibility = View.GONE
         immersive(darkMode = true)
-
         mViewBinding.root.applyWindowInsets {
             val insets = it.safelyInsets()
             // 顶部安全距离Fragment内处理
             mViewBinding.root.setPadding(insets.left, 0, insets.right, insets.bottom)
         }
-        mViewBinding.vpHomePager.isUserInputEnabled = false // vp2禁止滑动
-
-        mViewBinding.gotologin.singleClick {
-            startActivity(FlutterActivity.withNewEngine()
-                .initialRoute("tab1") //initialRoute是Android跳转到flutter需要的参数，这里传入“tab1”,表示跳转到flutter的tab1页面
-                .build(this))
-        }
-        mViewBinding.gotoset.singleClick {
-//            startActivity(FlutterActivity.withNewEngine()
-//                .initialRoute("home")
-//                .build(this))
-
-            startActivity(FlutterActivity.withCachedEngine(FLUTTER_ENGINE_ID).build(this))
-        }
-        mViewBinding.gotoroundimage.singleClick {
-            startActivity(FlutterActivity.withNewEngine()
-                .initialRoute("roundImage")
-                .build(this))
-        }
-
-        //初始化 FlutterEngine
-        flutterEngine = initFlutterEngine(FLUTTER_ENGINE_ID)
     }
 
-    /**
-     * 初始化 FlutterEngine
-     * 一般在跳转前调用，从缓存中取出 FlutterEngine，这样可以加快我们页面的一个跳转
-     */
-    private fun initFlutterEngine(engineId: String): FlutterEngine {
-        //创建 FlutterEngine
-        val flutterEngine = FlutterEngine(this)
-        //指定要跳转的 Flutter 页面
-        flutterEngine.navigationChannel.setInitialRoute("main")
-        flutterEngine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
-        //缓存 FlutterEngine
-        val flutterEngineCache = FlutterEngineCache.getInstance()
-        flutterEngineCache.put(engineId,flutterEngine)
-        return flutterEngine
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        flutterEngine.destroy()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun initView() {
+    private fun initView() {
         mViewBinding.rvHomeNavigation.layoutManager = GridLayoutManager(this, 4)
         homeNavigationAdapter = MianTabAdapter(this, tabList)
         homeNavigationAdapter.setOnItemClickListener { adapter, view, position ->
@@ -163,6 +104,19 @@ class MainActivity : BaseActivity() {
                 homeNavigationAdapter.notifyDataSetChanged()
             }
         })
+        mViewBinding.vpHomePager.isUserInputEnabled = false
+    }
+
+    private fun initDrawerLayout() {
+        mViewBinding.ivDrawer.singleClick {
+            mViewBinding.dlCrashDrawer.openDrawer(GravityCompat.START)
+        }
+        mViewBinding.toFlutter.singleClick {
+            startActivity(Intent(this, Go2FlutterActivity::class.java))
+        }
+        mViewBinding.toLivedataAcresult.singleClick {
+            startActivity(Intent(this, TakePhotoActivity::class.java))
+        }
     }
 }
 
@@ -194,7 +148,9 @@ class MianTabAdapter(val activity: MainActivity, list: List<MainTab>) :
         val img = holder.getView<ImageView>(R.id.iv_home_navigation_icon)
         title.text = item.title
         title.setTextColor(
-            if (item.checked) activity.resources.getColor(R.color.purple_500) else activity.resources.getColor(R.color.black)
+            if (item.checked) activity.resources.getColor(R.color.purple_500) else activity.resources.getColor(
+                R.color.black
+            )
         )
         img.background = ContextCompat.getDrawable(activity, item.imgRes)
         img.isSelected = item.checked

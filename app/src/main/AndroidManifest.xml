@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.wanandroid_k_m_j">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".WanAndroidApp"
         android:allowBackup="true"
@@ -14,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WanAndroid_K_M_J"
         tools:targetApi="31">
+        <activity
+            android:name=".gotoflutter.Go2FlutterActivity"
+            android:exported="false" />
         <activity
             android:name=".hilt.HiltActivity"
             android:exported="false"
@@ -31,6 +37,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".livedata_activityresult.TakePhotoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -40,11 +50,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize" />
     </application>
+
 </manifest>
