@@ -75,7 +75,7 @@ dependencies {
     kapt(WanAndroidExt.hilt_compiler)
     //hilt support end
 
-    implementation project(':flutter')
+//    implementation project(':flutter')
 }
 
 /**

@@ -18,9 +18,9 @@ rootProject.name = "WanAndroid_K_M_J"
 include ':app'
 include ':base'
 
-setBinding(new Binding([gradle: this]))
-evaluate(new File(
-        settingsDir,  // 项目同级目录的File路径
-        'myflutter/.android/include_flutter.groovy'
-))
-include ':myflutter'
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File(
+//        settingsDir,  // 项目同级目录的File路径
+//        'myflutter/.android/include_flutter.groovy'
+//))
+//include ':myflutter'
